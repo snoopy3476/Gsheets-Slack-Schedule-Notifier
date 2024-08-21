@@ -1,0 +1,14 @@
+{
+  "timeZone": "Etc/UTC",
+  "exceptionLogging": "STACKDRIVER",
+  "runtimeVersion": "V8",
+  "dependencies": {
+    "libraries": [
+      {
+        "userSymbol": "GSheetsSlackScheduleNotifier",
+        "libraryId": "1CZ1rh6cvKlu9bTpNwCZ_1nbqd38704CC3kOBnTIGOErvZCfcdRT2fdv7",
+        "version": "14"
+      }
+    ]
+  }
+}

@@ -8,17 +8,19 @@ const BOT_ICON_DEFAULT_ = ":alarm_clock:";
 // Throws an exception on error
 function slackApi_(method, apiName, args, description,
   { appToken, botName, botIcon }) {
-  //debugFcall_(arguments);
 
   const option = {
-    "method" : method,
-    "payload" : {
+    "method": method,
+    "payload": {
       "token": appToken,
       "username": botName || BOT_ICON_DEFAULT_,
       "icon_emoji": botIcon || BOT_ICON_DEFAULT_,
+      //"unfurl_links": false,
+      "unfurl_media": false,
       ...args
     }
   };
+
 
   for (i = 0; true; i++) {
     try {
@@ -27,40 +29,30 @@ function slackApi_(method, apiName, args, description,
     
       const resCode = res.getResponseCode();
       const resCodeType = Math.floor(resCode / 100);
-
-      //log_("slackApi: ", resBody);
       
       if (resCodeType >= 4 || resBody?.ok !== true) {
-        throw Error(
-          ` - Description: ${description}\n`
-          + ` - HTTP Code: ${resCode}\n`
-          + (resBody?.ok ? ` - ResBody > ok: ${resBody?.ok}\n` : "")
-          + (resBody?.error ? ` - ResBody > error: ${resBody?.error}\n` : ""));
+        throw {resCode, resBody};
       }
       
       return resBody;
     } catch (e) {
+      const errMsgDetail =
+        " - Description: " + description + "\n"
+          + " - HTTP Code: " + e.resCode + "\n"
+          + (e.resBody?.ok ? " - ResBody > ok: " + e.resBody.ok + "\n" : "")
+          + (e.resBody?.error ? " - ResBody > error: " + e.resBody.error + "\n" : "");
       
-      try {
-        const ui = getUi_();
-        const userPrompt = ui.alert(`[${BOT_NAME_}] Slack API call failure`,
-          `Failed to call the API '${apiName}'.\n`
-            + "Try again?\n\n"
-            + "[Detail]\n"
-            + e,
-          ui.ButtonSet.YES_NO);
-        if (userPrompt === ui.Button.YES) continue;
-
-      } catch (ee) {
+      // retry if rate limited error
+      if (!e?.resCode || e.resCode === 429) {
         if (i < 5) {
           const sleepMs = 1000 + 3000 * i;
-          log_(`Sleeping ${sleepMs / 1000}s due to an error: \n${e}`)
+          log_("Sleeping " + sleepMs / 1000 + "s due to an error: \n" + e)
           Utilities.sleep(sleepMs);
           continue;
         }
       }
 
-      throw Error(`Error response while calling Slack API '${apiName}': \n${e}`);
+      throw Error("Error response while calling Slack API '" + apiName + "': \n" + errMsgDetail);
     }
   }
 }

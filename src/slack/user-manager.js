@@ -1,19 +1,18 @@
-const USER_ID_MAP_KEY_ = "SLACK_USER_ID_MAP";
+const MD_KEY_SLACK_USER_ID_MAP_ = "SLACK_USER_ID_MAP";
 
 // Update Slack user ID metadata for all users on the sheets (A column)
 function refreshSlackUsers_(curSheet, slackApiConfig) {
 
-  const userList = getUsersWithId_();
-  if (!setMetadata_(curSheet, USER_ID_MAP_KEY_, userList)) {
-    throw Error("Failed to set metadata");
+  const userList = getUsersWithId();
+  if (!setMetadata_(curSheet, MD_KEY_SLACK_USER_ID_MAP_, userList)) {
+    throw Error("Failed to set Slack user metadata");
   }
-  debugVar_("userList", userList);
 
-  return getMetadata_(curSheet, USER_ID_MAP_KEY_);
-
+  return userList;
 
 
-  function getUsersWithId_() {
+
+  function getUsersWithId() {
     const userList =
       slackApi_("get", "users.list", null, "Slack user ID synchronization", slackApiConfig)?.members;
     //debugVar_("getUsers()", userList);
@@ -31,5 +30,5 @@ function refreshSlackUsers_(curSheet, slackApiConfig) {
 
 //
 function getSlackUsers_(curSheet) {
-  return getMetadata_(curSheet, USER_ID_MAP_KEY_);
+  return getMetadata_(curSheet, MD_KEY_SLACK_USER_ID_MAP_);
 }
