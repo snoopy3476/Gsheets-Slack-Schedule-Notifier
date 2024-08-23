@@ -30,6 +30,27 @@ After that, the sheet will work as follows:
 * Remind all schedules of that day every morning
 
 
+## Usage Examples
+
+1. If the sheet above (sample sheet) is filled as follows:  
+   ![sheet-before](https://github.com/snoopy3476/Gsheets-Slack-Schedule-Notifier/blob/f910558b9e7fd8b95e94bc016e6efa875a0351fe/readme-asset/sheet-before.png?raw=true)
+
+2. Slack connected with the sheet receives notifications as follows:  
+   | Desktop | Mobile | Mobile (Noti Preview) |
+   |:-------:|:------:|:---------------------:|
+   | ![example-desktop](https://github.com/snoopy3476/Gsheets-Slack-Schedule-Notifier/blob/f910558b9e7fd8b95e94bc016e6efa875a0351fe/readme-asset/example-desktop.jpg?raw=true) | ![example-mobile](https://github.com/snoopy3476/Gsheets-Slack-Schedule-Notifier/blob/f910558b9e7fd8b95e94bc016e6efa875a0351fe/readme-asset/example-mobile.jpg?raw=true) | ![example-mobile-noti](https://github.com/snoopy3476/Gsheets-Slack-Schedule-Notifier/blob/f910558b9e7fd8b95e94bc016e6efa875a0351fe/readme-asset/example-mobile-noti.jpg?raw=true) |
+
+4. And the schedules without repeat flag are unchecked after notified as follows:  
+   ![sheet-after](https://github.com/snoopy3476/Gsheets-Slack-Schedule-Notifier/blob/f910558b9e7fd8b95e94bc016e6efa875a0351fe/readme-asset/sheet-after.png?raw=true)
+
+
+## Use the Library in Google Apps Script Directly
+
+You can [add the source library to your Google Apps Script project](https://developers.google.com/apps-script/guides/libraries) without using the sample sheet above that uses this library.
+
+* Apps Script Library ID: `1CZ1rh6cvKlu9bTpNwCZ_1nbqd38704CC3kOBnTIGOErvZCfcdRT2fdv7`
+
+
 ## Notes
 
 * Be aware of Apps Script quotas
